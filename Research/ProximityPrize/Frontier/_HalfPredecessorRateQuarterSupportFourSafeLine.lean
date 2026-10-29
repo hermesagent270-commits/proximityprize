@@ -63,7 +63,8 @@ theorem supportFourInterpolant_degree_lt_four
     (supportFourInterpolant dom u1 w).degree < 4 := by
   have hdeg := Lagrange.degree_interpolate_lt
     (s := directionSupportSet u1) (v := dom) (r := w) dom.injective.injOn
-  simpa only [hsupport] using hdeg
+  rw [hsupport] at hdeg
+  exact_mod_cast hdeg
 
 theorem exists_codePolynomial_of_mem_five_stratum
     (dom : Fin 16 ↪ F) (u0 u1 : Fin 16 → F)
@@ -136,7 +137,8 @@ theorem fiveCodePolynomial_eq_affine_support
         C (fiveScalar dom u0 u1 c) * supportFourInterpolant dom u1 u1 := by
   refine Polynomial.eq_of_degrees_lt_of_eval_index_eq
     (directionSupportSet u1) dom.injective.injOn ?_ ?_ ?_
-  · simpa only [hsupport] using fiveCodePolynomial_degree_lt dom u0 u1 c
+  · rw [hsupport]
+    exact_mod_cast fiveCodePolynomial_degree_lt dom u0 u1 c
   · rw [hsupport]
     apply lt_of_le_of_lt (Polynomial.degree_add_le _ _)
     apply max_lt
@@ -461,7 +463,8 @@ theorem sixFullCodePolynomial_eq_affine_support
         C (sixFullScalar dom u0 u1 c) * supportFourInterpolant dom u1 u1 := by
   refine Polynomial.eq_of_degrees_lt_of_eval_index_eq
     (directionSupportSet u1) dom.injective.injOn ?_ ?_ ?_
-  · simpa only [hsupport] using sixFullCodePolynomial_degree_lt dom u0 u1 c
+  · rw [hsupport]
+    exact_mod_cast sixFullCodePolynomial_degree_lt dom u0 u1 c
   · rw [hsupport]
     apply lt_of_le_of_lt (Polynomial.degree_add_le _ _)
     apply max_lt

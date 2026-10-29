@@ -112,9 +112,12 @@ theorem ReedSolomon_ProximityGapAffineLines_UniqueDecoding [Nontrivial (ReedSolo
   let jointProximity₂_u₀_u₁ := jointProximity₂_affineShift_implies_jointProximity₂ (ι := ι)
     (MC := CRS) (u₀ := u₀) (u₁ := u₁) (δ := δ) (h_jointProximity₂)
   unfold jointProximity₂ jointProximity at jointProximity₂_u₀_u₁
-  rw [relDistFromCode_le_iff_distFromCode_le] at jointProximity₂_u₀_u₁
-  rw [h_δ_mul_n_eq_e] at jointProximity₂_u₀_u₁
-  exact jointProximity₂_u₀_u₁
+  dsimp only at jointProximity₂_u₀_u₁
+  have h_dist := (relDistFromCode_le_iff_distFromCode_le
+    (fun j => (⋈|finMapTwoWords u₀ u₁ : InterleavedWord A (Fin 2) ι) j) δ).1
+    jointProximity₂_u₀_u₁
+  rw [h_δ_mul_n_eq_e] at h_dist
+  exact h_dist
 
 /-- **Corollary 3.7**: RS Codes have Tensor-Style Proximity Gaps (Unique Decoding)
 Example 4.1 shows that ε=n is tight for RS codes (Ben+23 Thm 4.1 is sharp). -/
@@ -210,7 +213,8 @@ theorem reedSolomon_multilinearCorrelatedAgreement [Nontrivial (ReedSolomon.code
   )
   rw [jointAgreement_iff_jointProximity]
   unfold jointProximity
-  rw [relDistFromCode_le_iff_distFromCode_le]
+  dsimp only
+  refine (relDistFromCode_le_iff_distFromCode_le (fun j => (⋈|u : InterleavedWord A _ ι) j) _).2 ?_
   unfold jointProximityNat at h_CA_Nat
   exact h_CA_Nat
 

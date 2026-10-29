@@ -137,6 +137,9 @@ def uniDom (hchar : CharGe17 F) : Fin 16 ↪ F where
         ring
       exact hchar (i.val - j.val) (by omega) (by omega) hz
 
+theorem uniDom_apply (hchar : CharGe17 F) (i : Fin 16) :
+    uniDom hchar i = uniDomFun i := rfl
+
 /-- The strip codeword: `e = X(X−5)(X−7)` on the standard domain. -/
 def ePTE : Fin 16 → F := fun i => (i.val : F) * ((i.val : F) - 5) * ((i.val : F) - 7)
 
@@ -162,7 +165,7 @@ theorem ePTE_mem_rsCode (hchar : CharGe17 F) :
     rw [Polynomial.degree_eq_natDegree hm.ne_zero, hdeg]
     exact_mod_cast (by norm_num : (3 : ℕ) < 4)
   · funext i
-    simp [ePTE, uniDom, uniDomFun, eval_mul, eval_sub, eval_X, eval_C]
+    simp [ePTE, uniDom_apply, uniDomFun, eval_mul, eval_sub, eval_X, eval_C]
 
 /-- `(24 : F) ≠ 0` under the characteristic hypothesis (`24 = 2·2·2·3`). -/
 theorem twentyFour_ne_zero (hchar : CharGe17 F) : (24 : F) ≠ 0 := by

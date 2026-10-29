@@ -351,6 +351,9 @@ def powDom (ω : F) (hn : orderOf ω = n) : Fin n ↪ F :=
     · exact Set.mem_Iio.mpr (by rw [hn]; exact l₁.isLt)
     · exact Set.mem_Iio.mpr (by rw [hn]; exact l₂.isLt)⟩
 
+theorem powDom_apply (ω : F) (hn : orderOf ω = n) (l : Fin n) :
+    powDom ω hn l = ω ^ (l : ℕ) := rfl
+
 /-- On a multiplicative domain, the agreement set of the constant codeword `1 = x^0` with the
 monomial direction `x^j` is the subgroup `{l : n ∣ l·j}` — size `gcd(j, n)`, far above the
 generic interpolation core `k`. -/
@@ -358,7 +361,7 @@ theorem agreeSet_one_monoDir (ω : F) (hn : orderOf ω = n) (j : ℕ) :
     agreeSet (monoDir (powDom ω hn) 0) (monoDir (powDom ω hn) j)
       = Finset.univ.filter (fun l : Fin n => n ∣ (l : ℕ) * j) := by
   ext i
-  simp only [agreeSet, monoDir, powDom, Function.Embedding.coeFn_mk, Finset.mem_filter,
+  simp only [agreeSet, monoDir, powDom_apply, Finset.mem_filter,
     Finset.mem_univ, true_and, pow_zero, ← pow_mul]
   rw [eq_comm, ← orderOf_dvd_iff_pow_eq_one, hn]
 

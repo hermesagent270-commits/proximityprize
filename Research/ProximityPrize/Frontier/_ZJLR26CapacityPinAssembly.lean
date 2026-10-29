@@ -152,7 +152,7 @@ theorem ball_finset_card_le_of_lambda_le
         ≤ ((L : ℕ) : ENNReal) := by
     calc (((closeCodewordsRel ((C : Set (ι → Fin s → F))) y δ').ncard : ℕ) : ENNReal)
         = ((((closeCodewordsRel ((C : Set (ι → Fin s → F))) y δ').ncard : ℕ∞)) :
-            ENNReal) := by simp
+            ENNReal) := by norm_cast
       _ ≤ (Lambda ((C : Set (ι → Fin s → F))) δ' : ENNReal) := ENat.toENNReal_mono hpoint
       _ ≤ ENNReal.ofReal bound := hΛ
       _ ≤ ENNReal.ofReal (L : ℝ) := ENNReal.ofReal_le_ofReal hbound
